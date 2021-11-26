@@ -6,7 +6,7 @@
 # Функція повинна принтануть і вернуть суму, яка буде на рахунку.
 #
 def bank(a, years, percents):
-    a = a + ( 1 + percents / 100) ** years
+    a = a *( 1 + percents / 100) ** years
     return a
 a = float(input("a0 = "))
 years = int(input('years = '))
