@@ -22,10 +22,14 @@ def range_gen(stop, start=0, step=1) :
 start = int(input('Start value is: '))
 stop = int(input("stop value is: "))
 step = int(input('step = '))
+
 try:
-    for elem in range_gen( stop, start, step) :
+    for elem in range_gen( stop, start, step) : 
         print(elem, end = ' ')
 except StepError as err :
     print(err)
-finally : 
-    print("Stop")
+finally :
+    print('\n')
+    rez = list(range_gen( stop, start, step))
+    print(rez)
+    print(" Stop")
