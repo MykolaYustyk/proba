@@ -5,29 +5,38 @@
 class StepError(Exception) :
     pass
 
-def range_gen(start, stop, step=1) :
+def range_gen(start=0, stop='', step='') :
+    if stop == '':
+        stop = start
+        start = 0
+    if step == '':
+        step = 1
+    else:
+        step = int(step)            
     if step > 0 :
         i = start
-        while i < stop :
+        while i < int(stop) :
             yield i
             i += step
     elif step < 0:
         i = start
-        while i > stop :
+        while i > int(stop) :
             yield i
             i += step
     else: 
          raise StepError("Step must be non equal zero")              
-
+stop = ''
+step = ''
 start = int(input('Start value is: '))
-stop = int(input("stop value is: "))
-step = int(input('step = '))
+stop = input("stop value is: ")
+step = input('step = ')
 try:
-    for elem in range_gen( start, stop, step) : 
+    for elem in range_gen(start, stop, step) : 
         print(elem, end = ' ')
 except StepError as err :
     print(err)
 finally :
+    print('\n')
     rez = list(range_gen(start, stop, step))
     print(rez)
     print(" Stop")
