@@ -5,7 +5,7 @@
 class StepError(Exception) :
     pass
 
-def range_gen(stop, start=0, step=1) :
+def range_gen(start, stop, step=1) :
     if step > 0 :
         i = start
         while i < stop :
@@ -22,14 +22,12 @@ def range_gen(stop, start=0, step=1) :
 start = int(input('Start value is: '))
 stop = int(input("stop value is: "))
 step = int(input('step = '))
-
 try:
-    for elem in range_gen( stop, start, step) : 
+    for elem in range_gen( start, stop, step) : 
         print(elem, end = ' ')
 except StepError as err :
     print(err)
 finally :
-    print('\n')
-    rez = list(range_gen( stop, start, step))
+    rez = list(range_gen(start, stop, step))
     print(rez)
     print(" Stop")
