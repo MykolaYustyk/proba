@@ -20,54 +20,60 @@
 #           3. Вихід
 #
 import json
-class ValidationError(Exception) :
+class ValidationError(Exception):
     pass
-class OwerBalanceError(Exception) :
+class OwerBalanceError(Exception):
     pass
-
-def start(user_name) :
+class NegativeAddBalanceError(Exception):
+    pass
+def start(user_name):
     result = 0
     print('Привіт, ', user_name)
-    print('_'*10)
+    print('*'*10)
     print('Введіть дію: \n', '1. Продивитись баланс\n', '2. Поповнити баланс\n', '3. Зняти кошти\n', '4. Вихід\n')
     result = int(input())
     return result
 
-def validation(user_name, user_password) : 
+def validation(user_name, user_password):
     result = False
     current_user = []
     current_user.append(user_name)
     current_user.append(user_password)
     
     users_list = []
-    with open ('users.txt', 'r') as users_file :
+    with open ('users.txt', 'r') as users_file:
         users_as_list = users_file.readlines()
-        for i in range(len(users_as_list)) :
+        for i in range(len(users_as_list)):
             users_list.append((users_as_list[i])[:-1].split())
         users_list.append(users_as_list[-1].split())
-        if current_user in users_list :
+        if current_user in users_list:
             result = True
-        else : 
+        else:
             raise ValidationError("Такого користувача немає")    
     return result
 
-def view_balance(user_name) : 
-     with open(user_name + "_balance.txt", 'r') as file_balance : 
+def view_balance(user_name):
+     with open(user_name + "_balance.txt", 'r') as file_balance:
                 current_balance = file_balance.read()
                 print("Ваш поточний баланс: ", current_balance)  
                 
-def add_balance(user_name, add_balance=True) :
+def add_balance(user_name, add_balance=True):
     file_balance = open(user_name + "_balance.txt", 'r')
     current_balance = int(file_balance.read())
     file_balance.close()
-    if add_balance :
+    if add_balance:
         app_balance = int(input("На яку сумму Ви хочете поповнити Ваш рахунок? \n"))
+        if app_balance <= 0:
+            raise NegativeAddBalanceError("Ви намагєтесь поповнити кошти від'ємним числом")
     else: 
         app_balance = - int(input("Яку суму бажаєте зняти? \n"))
-        if abs(app_balance)> current_balance :
+        if app_balance >= 0:
+            raise NegativeAddBalanceError("Ви намагаєтесь зняти негативну суму коштів. ")
+        if abs(app_balance) > current_balance:
             raise OwerBalanceError("Ви не можете зняти кошти більше, ніж поточний баланс.")
-    with open(user_name + '_transaction.txt', 'a') as trans_file :
-        json.dump({"transaction" : app_balance}, trans_file)
+        
+    with open(user_name + '_transaction.txt', 'a') as trans_file:
+        json.dump({"transaction": app_balance}, trans_file)
     current_balance += app_balance
     print("Ваш новий баланс: ", current_balance)
     file_balance = open(user_name + "_balance.txt", 'w')
@@ -77,18 +83,18 @@ def add_balance(user_name, add_balance=True) :
 try :
     user_name = input("Введіть Ваше ім'я: ")
     user_password = input("Ваш пароль: ")
-    while validation(user_name, user_password) :
+    while validation(user_name, user_password):
         item = start(user_name)
         if item == 1:
             view_balance(user_name)
-        elif item == 2 :
+        elif item == 2:
             add_balance(user_name)           
-        elif item == 3 :
+        elif item == 3:
             add_balance(user_name, False)          
         else: 
             break        
         
-except (ValidationError, OwerBalanceError) as err :
+except (ValidationError, OwerBalanceError, NegativeAddBalanceError) as err :
     print(err)
 finally:
-    print('Stop')
+    print('Stop'.center(10,'*'))
