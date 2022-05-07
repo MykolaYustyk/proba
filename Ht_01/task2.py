@@ -5,8 +5,8 @@
 #      Expected Output :
 #      {'Black', 'White'}
 
-color_list_1 = set(input("Input first colors : ").split(", "))
-color_list_2 = set(input("Input second colors : ").split(", "))
+color_list_1 = set(input("Input first colors list: ").split(", "))
+color_list_2 = set(input("Input second colors list: ").split(", "))
 out_list = set()
 for color in color_list_1 :
     if color not in color_list_2 :
