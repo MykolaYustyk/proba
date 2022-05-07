@@ -7,5 +7,5 @@
 
 color_list_1 = set(input("Input first colors list: ").split(", "))
 color_list_2 = set(input("Input second colors list: ").split(", "))
-out_list = set([color for color in color_list_1 if color not in color_list_2])
+out_list = set(color for color in color_list_1 if color not in color_list_2)
 print('Output set is : \n', out_list)
