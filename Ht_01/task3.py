@@ -4,7 +4,5 @@
 
 """
 n = int(input("Write number of the first positive integers \n"))
-s = 0
-for i in range(1,n+1) :
-    s += i
+s = sum(num for num in range(1, n + 1))
 print('s =', s)
