@@ -11,4 +11,4 @@ out_list = set()
 for color in color_list_1 :
     if color not in color_list_2 :
         out_list.add(color)
-print('Output list is : \n', out_list)
+print('Output set is : \n', out_list)
