@@ -3,7 +3,7 @@
 #
 def is_prime(digit) :
     result = True
-    for i in range(2, digit-1):
+    for i in range(2, digit+1):
         if digit % i == 0:
             result = False
             break  
